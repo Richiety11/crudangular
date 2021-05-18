@@ -1,0 +1,35 @@
+###buscar
+GET http://localhost:3100/api/empleados HTTP/1.1
+Content-Type: application/json
+
+###Insertar prdocuto 
+POST http://localhost:3100/api/empleados HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre": "Richieiyfhdgf",
+    "puesto": "Developer jr",
+    "departamento":"computer science",
+    "salario": 200
+}
+
+
+###Consutlar por ID
+GET http://localhost:3000/api/empleados/6081c4280ed06218e43bd2a6 HTTP/1.1
+
+###Actualizar por ID
+PUT http://localhost:3000/api/empleados/6081c4280ed06218e43bd2a6 HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre": "Ricardo",
+    "puesto": "Developer jr",
+    "departamento":"computer science",
+    "salario": 22000
+}
+
+###Eliminar por ID
+DELETE  http://localhost:3000/api/empleados/6081c4280ed06218e43bd2a6 HTTP/1.1
+Content-Type: application/json
+
+//concurrently 'npm run build' 'npm run desarrollo'
