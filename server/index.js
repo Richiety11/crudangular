@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const authorization = require('auth-header');
 
 //Modelo de datos de usuarios
 const Users = require('./models/Users');
@@ -57,10 +58,22 @@ app.post('/api/login', async (req, res)=>{
 //El token se envia atraves de request.body (en un json)
 //Request.query.token (en la url)
 //request.headers (contiene las cabeceras)
+
+//http://localhost:3100/api/users HTTP/1.1
+//Content-Type: application/json
+//Authorizaton: token-auth token
 app.use( (req, res, next)=>{
+    //Verificamos si el token viene por el header
+    var tokenauth='';
+    if (req.get('authorization')){
+        auth = authorization.parse(req.get('authorization'));
+        if (auth.scheme == 'token-auth')
+            tokenauth = auth.token;
+    }
+
     const token = req.body.token || //json
-                  req.query.token ||
-                  req.headers['authorization'];//headers
+                  req.query.token ||//url
+                  tokenauth;//headers
     if (token) {
         jwt.verify(token, app.get('secret'), (err, decoded)=>{
             if (err){

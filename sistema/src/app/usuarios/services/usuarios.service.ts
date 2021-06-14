@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http"; //peticiones al backend
+import { HttpClient, HttpHeaders } from "@angular/common/http"; //peticiones al backend
 import { Observable, BehaviorSubject, Subject } from 'rxjs'; //Manejo de tokens en el servidor
 import { tap } from 'rxjs/operators';
 import jwt_decode from 'jwt-decode';
@@ -25,6 +25,11 @@ export class UsuariosService {
   //Y la actualiza en memoria
   public changeLoginStatus$ = this. changeLoginStatusSubject.asObservable();
 
+  
+  //Variable globar que almacena el nombre del usuario
+  public changeUserNameSubject = new Subject<String>();
+  public changeUserName$ = this.changeUserNameSubject.asObservable();
+
   constructor(private httpClient: HttpClient) { }
   //Funcion que almacena en el localstorage del navegador
   //el token y la fecha de expiracion
@@ -35,7 +40,9 @@ export class UsuariosService {
             (res) =>{
               if (res.success){ //Success = true <- usuario y contraseña correctas
                 var decoded: any = jwt_decode(res.token);
-
+                //Guardamos el nombre del usuario en la variable global
+                var userName = decoded.user.name;
+                this.changeUserNameSubject.next(userName);
                 //Guardamos el token en localstorage
                 this.saveToken(res.token, decoded.exp);
                 //Cambiamos la variable global de inicio de sesion a True
@@ -78,5 +85,17 @@ export class UsuariosService {
       this.token = localStorage.getItem("ACCESS_TOKEN");
     }
     return this.token;
-  }
+  }//Fin de getToken
+
+  getUsers(){
+    return this.httpClient.get(
+      this.AUTH_SERVER+'users',
+      {
+        headers: new HttpHeaders({
+            'Authorization': 'token-auth '+ this.getToken()
+        })
+      }
+    )
+  }//Fin de getUsers
+
 }//Class usuarioservices

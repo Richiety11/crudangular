@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuariosService } from '../../services/usuarios.service';
+import { Router } from '@angular/router';
+import { UsuariosI } from '../../models/usuarios';
 
 @Component({
   selector: 'app-usuarios',
@@ -7,9 +10,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor() { }
+  //Arreglo que contendra todos los usuarios de la bd
+  public users:any = [];
 
-  ngOnInit(): void {
+  constructor(private usuariosService: UsuariosService,
+              private router: Router) { 
+    this.users = new Array()
   }
 
+  ngOnInit(): void {
+    this.getUsers();
+  }
+
+  getUsers(){
+    this.usuariosService.getUsers()
+                        .subscribe(res=>{
+                            this.users = res as UsuariosService[];
+                        })
+  }//Fin de getUsers
+
+  showUser(_id:string){
+    this.router.navigate(['usuarios/'+_id]);
+  }//Fin de showUser
 }
+

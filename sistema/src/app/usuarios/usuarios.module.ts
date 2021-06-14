@@ -7,12 +7,14 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { LoginComponent } from './components/login/login.component';
 import { UsuariosService } from './services/usuarios.service';
+import { UsuariodetalleComponent } from './components/usuariodetalle/usuariodetalle.component';
 
 
 @NgModule({
   declarations: [
     UsuariosComponent,
-    LoginComponent
+    LoginComponent,
+    UsuariodetalleComponent
   ],
   imports: [
     HttpClientModule,
