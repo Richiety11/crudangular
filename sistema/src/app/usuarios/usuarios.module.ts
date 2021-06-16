@@ -8,7 +8,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { LoginComponent } from './components/login/login.component';
 import { UsuariosService } from './services/usuarios.service';
 import { UsuariodetalleComponent } from './components/usuariodetalle/usuariodetalle.component';
-
+//Importamos nbBootstrap
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { UsuariodetalleComponent } from './components/usuariodetalle/usuariodeta
     UsuariodetalleComponent
   ],
   imports: [
+    NgbModule,
     HttpClientModule,
     FormsModule,
     CommonModule,

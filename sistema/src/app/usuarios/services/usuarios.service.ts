@@ -98,4 +98,15 @@ export class UsuariosService {
     )
   }//Fin de getUsers
 
+  //Obtener los datos de un usuario
+  getUser(id:string){
+    return this.httpClient.get(
+      this.AUTH_SERVER+'users/'+id,
+      {
+        headers: new HttpHeaders({
+            'Authorization': 'token-auth '+ this.getToken()
+        })
+      }
+    )
+  }
 }//Class usuarioservices
