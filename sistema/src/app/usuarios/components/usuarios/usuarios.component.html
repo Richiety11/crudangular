@@ -6,7 +6,7 @@
             <th scope="col">Email</th>
             <th scope="col">
                 <button type="button" class="btn btn-outline-light"
-                        (click)="modal.open(mimodal)">Agregar</button>
+                        (click)="open(mimodal)">Agregar</button>
             </th>
         </thead>
         <tr scope="row" *ngFor="let user of users">
@@ -17,10 +17,38 @@
                         (click)="showUser(user._id)">
                         Detalles
                 </button>
+
+                <button class="btn btn-outline-danger ml-2"
+                        (click)="abrirModalEliminar(user._id,removeModal)">
+                Eliminar
+                </button>
             </td>
         </tr>
     </table>
     </div>
+
+    <!--Codigo de modal para eliminar-->
+    <ng-template #removeModal let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Eliminar usuario</h4>
+        <button type="button" class="close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>¿Estás seguro de eliminar el usuario?
+          <span class="text-primary">{{user.name}}</span>
+          </strong>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary"
+                (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="button" class="btn btn-outline-danger"
+                (click)="deleteUser(user._id)">OK</button>
+      </div>
+    </ng-template>
 
 <!--Codigo del modal NgbModal-->
 <ng-template #mimodal let-modal>
